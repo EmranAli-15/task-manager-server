@@ -1,6 +1,9 @@
 import express from 'express';
 import { DBConnection, getDb } from './database/databaseConnection';
+import { noteRoute } from './modules/note/note.route';
+import { globalError } from './error/globalError';
 const app = express();
+app.use(express.json());
 const port = 5000;
 
 app.listen(port, () => {
@@ -15,6 +18,11 @@ app.get("/user", async (req, res) => {
     return
 })
 
+
+app.use("/api", noteRoute);
+
 app.get("/", (req, res) => {
     res.send("Hello World");
 })
+
+app.use(globalError)
