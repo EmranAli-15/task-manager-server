@@ -1,7 +1,8 @@
 import express from 'express';
-import { DBConnection, getDb } from './database/databaseConnection';
+import { DBConnection } from './database/databaseConnection';
 import { noteRoute } from './modules/note/note.route';
 import { globalError } from './error/globalError';
+import { userRoute } from './modules/user/user.route';
 const app = express();
 app.use(express.json());
 const port = 5000;
@@ -11,15 +12,12 @@ app.listen(port, () => {
     DBConnection();
 });
 
-app.get("/user", async (req, res) => {
-    const StudentCollection = getDb().collection("students");
-    const students = await StudentCollection.find().toArray();
-    res.send(students);
-    return
-})
 
-
+// ROUTES------------------------------------
 app.use("/api", noteRoute);
+app.use("/api", userRoute);
+// ROUTES------------------------------------
+
 
 app.get("/", (req, res) => {
     res.send("Hello World");

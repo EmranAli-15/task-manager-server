@@ -1,11 +1,11 @@
 import express from "express";
 import { JoiValidator } from "../../utils/joiValidator";
 import { noteValidation } from "./note.validation";
-import { createNote, getNote } from "../../utils/handleAsync";
+import { noteController } from "./note.controller";
 const route = express.Router();
 
-route.post("/createNote", JoiValidator(noteValidation.createNote), createNote)
-route.get("/getNote", getNote)
+route.post("/createNote", JoiValidator(noteValidation.createNote), noteController.createNote)
+route.get("/getNotes", noteController.getNotes)
 
 
 export const noteRoute = route;
