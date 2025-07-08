@@ -6,7 +6,6 @@ const createNote = handleAsync(async (req: Request, res: Response) => {
     const result = await NoteCollection.insertOne(req.body);
 
     res.status(201).json({
-        success: true,
         message: 'Note created.',
         data: result
     });
@@ -16,7 +15,6 @@ const getNotes = handleAsync(async (req: Request, res: Response) => {
     const result = await NoteCollection.find().toArray();
 
     res.status(200).json({
-        success: true,
         message: 'Notes retrieved.',
         data: result
     });

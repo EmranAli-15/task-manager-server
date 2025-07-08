@@ -3,7 +3,8 @@ import { handleAsync } from "../../utils/handleAsync";
 import { TUser } from "./user.interface";
 import { UserCollection } from "../../database/databaseConnection";
 import { AppError } from "../../error/appError";
-import { hashGenerate } from "../../utils/hashGenerate";
+import { hashGenerate, hashMatch } from "../../utils/hashGenerate";
+import { createAccessToken } from "../../utils/createAccessToken";
 
 const createUser = handleAsync(async (req: Request, res: Response) => {
     const userInfo: TUser = req.body;
@@ -17,15 +18,48 @@ const createUser = handleAsync(async (req: Request, res: Response) => {
 
     const isUserExist = await UserCollection.findOne({ email: userEmail });
 
-    if (!isUserExist) {
-        const hashPass = await hashGenerate(userPass);
-        console.log(hashPass)
+    if (isUserExist) {
+        throw new AppError(409, "The user already exist.");
     }
-    else res.send(isUserExist)
 
-    res.send("working")
+    const hashPass = await hashGenerate(userPass);
+
+    const userObj = {
+        name: userInfo.name,
+        email: userInfo.email,
+        password: hashPass,
+    }
+    await UserCollection.insertOne(userObj);
+    const token = createAccessToken({ email: userInfo.email });
+
+    res.status(201).json({
+        message: 'User created.',
+        data: token
+    });
+});
+
+const loginUser = handleAsync(async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    const userDoc: unknown | TUser = await UserCollection.findOne({ email });
+    if (!userDoc) {
+        throw new AppError(404, "User not found.")
+    }
+
+    const isUserExist = userDoc as unknown as TUser;
+    const isPasswordMatch = await hashMatch(password, isUserExist.password);
+    if (!isPasswordMatch) {
+        throw new AppError(403, "Password incorrect.")
+    }
+
+    const token = createAccessToken({ email: isUserExist.email });
+    res.status(200).json({
+        message: 'Logged in successful.',
+        data: token
+    })
 })
 
 export const userController = {
-    createUser
+    createUser,
+    loginUser
 }

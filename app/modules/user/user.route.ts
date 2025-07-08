@@ -5,6 +5,7 @@ import { userController } from "./user.controller";
 const route = express.Router();
 
 route.post("/createUser", JoiValidator(userValidation.createUser), userController.createUser)
+route.post("/loginUser", userController.loginUser)
 
 
 export const userRoute = route;
