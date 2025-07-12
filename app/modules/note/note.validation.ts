@@ -11,12 +11,13 @@ const createNote = Joi.object({
 })
 
 const updateNote = Joi.object({
-    title: Joi.string().optional(),
-    details: Joi.string().optional(),
-    links: Joi.array().items(Joi.string()).optional(),
-    photos: Joi.array().items(Joi.string()).optional(),
-    color: Joi.object().optional(),
-    categoryId: Joi.string().optional(),
+    userId: Joi.string().required(),
+    categoryId: Joi.string().required(),
+    title: Joi.string(),
+    color: Joi.object(),
+    details: Joi.string(),
+    links: Joi.array().items(Joi.string()),
+    photos: Joi.array().items(Joi.string()),
 })
 
 
