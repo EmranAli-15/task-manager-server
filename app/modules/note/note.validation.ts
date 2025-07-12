@@ -3,7 +3,7 @@ import Joi from "joi";
 const createNote = Joi.object({
     title: Joi.string().required(),
     userId: Joi.string().required(),
-    category: Joi.string().required(),
+    categoryId: Joi.string().required(),
     color: Joi.object(),
     details: Joi.string(),
     links: Joi.array().items(Joi.string()),
@@ -16,7 +16,7 @@ const updateNote = Joi.object({
     links: Joi.array().items(Joi.string()).optional(),
     photos: Joi.array().items(Joi.string()).optional(),
     color: Joi.object().optional(),
-    category: Joi.string().optional(),
+    categoryId: Joi.string().optional(),
 })
 
 

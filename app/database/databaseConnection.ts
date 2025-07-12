@@ -1,7 +1,10 @@
 import { MongoClient, Db, Collection } from "mongodb";
+import envFile from "../envFile/envFile";
 
-const uri = 'mongodb://127.0.0.1:27017';
-const client = new MongoClient(uri);
+const uri = `mongodb+srv://${envFile.db_name}:${envFile.db_pass}@cluster0.2b4mnlf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = "mongodb://127.0.0.1:27017";
+
+export const client = new MongoClient(uri);
 
 let DB: Db;
 
@@ -13,7 +16,8 @@ let UserCollection: Collection;
 export const DBConnection = async () => {
     try {
         await client.connect();
-        DB = client.db("taskManager");
+        DB = client.db(`${envFile.db_name}`);
+        // DB = client.db("taskManager");
         console.log("🚀 Database connected!");
 
         // Collections------------Collections------------

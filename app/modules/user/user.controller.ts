@@ -41,7 +41,7 @@ const createUser = handleAsync(async (req: Request, res: Response) => {
 const loginUser = handleAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const userDoc: unknown | TUser = await UserCollection.findOne({ email });
+    const userDoc = await UserCollection.findOne({ email });
     if (!userDoc) {
         throw new AppError(404, "User not found.")
     }
@@ -55,7 +55,13 @@ const loginUser = handleAsync(async (req: Request, res: Response) => {
     const token = createAccessToken({ email: isUserExist.email });
     res.status(200).json({
         message: 'Logged in successful.',
-        data: token
+        data: {
+            token,
+            user: {
+                name: userDoc?.name,
+                id: userDoc?._id
+            }
+        }
     })
 })
 
