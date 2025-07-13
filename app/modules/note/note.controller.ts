@@ -46,7 +46,9 @@ const createNote = handleAsync(async (req: Request, res: Response) => {
 })
 
 const getNotes = handleAsync(async (req: Request, res: Response) => {
-    const result = await NoteCollection.find().toArray();
+    const { userId, categoryId } = req.body;
+
+    const result = await NoteCollection.find({ userId: new ObjectId(userId as string), categoryId: new ObjectId(categoryId as string) }).toArray();
 
     res.status(200).json({
         message: 'Notes retrieved.',
@@ -97,8 +99,61 @@ const updateNote = handleAsync(async (req: Request, res: Response) => {
     }
 })
 
+const getSingleNote = handleAsync(async (req: Request, res: Response) => {
+    const { noteId } = req.params;
+    const result = await NoteCollection.findOne({ _id: new ObjectId(noteId) });
+    if (!result) {
+        throw new AppError(404, "Note not found.");
+    };
+
+    res.status(200).json({
+        message: 'Note retrieved.',
+        data: result
+    });
+})
+
+const deleteNote = handleAsync(async (req: Request, res: Response) => {
+    const { noteId } = req.params;
+    const result = await NoteCollection.deleteOne({ _id: new ObjectId(noteId) });
+    if (!result) {
+        throw new AppError(404, "Note not found.");
+    };
+
+    res.status(200).json({
+        message: 'Note deleted.',
+        data: result
+    });
+})
+
+const userNotes = handleAsync(async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const result = await UserCollection.aggregate([
+        { $match: { _id: new ObjectId(userId) } },
+        {
+            $lookup: {
+                from: "category",
+                localField: "categories",
+                foreignField: "_id",
+                as: "categories"
+            }
+        }
+    ]).project({ password: 0 }).toArray();
+
+    if (!result.length) {
+        throw new AppError(404, "User not found.");
+    };
+
+    res.status(200).json({
+        message: 'Notes retrieved.',
+        data: result
+    });
+})
+
 export const noteController = {
     createNote,
     updateNote,
-    getNotes
+    getNotes,
+    getSingleNote,
+    deleteNote,
+    userNotes
 }
