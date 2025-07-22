@@ -1,9 +1,12 @@
 import express from 'express';
+import cors from 'cors';
 import { DBConnection } from './database/databaseConnection';
 import { noteRoute } from './modules/note/note.route';
 import { globalError } from './error/globalError';
 import { userRoute } from './modules/user/user.route';
+
 const app = express();
+app.use(cors());
 app.use(express.json());
 const port = 5000;
 

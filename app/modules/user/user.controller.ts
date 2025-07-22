@@ -29,8 +29,9 @@ const createUser = handleAsync(async (req: Request, res: Response) => {
         email: userInfo.email,
         password: hashPass,
     }
-    await UserCollection.insertOne(userObj);
-    const token = createAccessToken({ email: userInfo.email });
+    const result = await UserCollection.insertOne(userObj);
+
+    const token = createAccessToken({ email: userInfo.email, id: result.insertedId.toString() });
 
     res.status(201).json({
         message: 'User created.',
@@ -52,7 +53,7 @@ const loginUser = handleAsync(async (req: Request, res: Response) => {
         throw new AppError(403, "Password incorrect.")
     }
 
-    const token = createAccessToken({ email: isUserExist.email });
+    const token = createAccessToken({ email: isUserExist.email, id: userDoc._id });
     res.status(200).json({
         message: 'Logged in successful.',
         data: {
