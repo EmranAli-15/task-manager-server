@@ -1,11 +1,10 @@
 import Joi from "joi";
 
 const createNote = Joi.object({
-    title: Joi.string().required(),
+    title: Joi.string().empty(''),
     userId: Joi.string().required(),
     categoryId: Joi.string().required(),
-    color: Joi.object(),
-    details: Joi.string(),
+    details: Joi.string().empty(''),
     links: Joi.array().items(Joi.string()),
     photos: Joi.array().items(Joi.string()),
 })

@@ -145,7 +145,7 @@ const userNotes = handleAsync(async (req: Request, res: Response) => {
 
     res.status(200).json({
         message: 'Notes retrieved.',
-        data: result
+        data: result[0]
     });
 })
 
