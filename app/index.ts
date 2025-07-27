@@ -1,25 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import { DBConnection } from './database/databaseConnection';
 import { noteRoute } from './modules/note/note.route';
 import { globalError } from './error/globalError';
 import { userRoute } from './modules/user/user.route';
 
-const app = express();
+export const app = express();
 app.use(cors());
 app.use(express.json());
-const port = 5000;
-
-
-//---------FOR LOCALHOST----------
-// app.listen(port, () => {
-//     console.log("server is running on port " + port);
-//     DBConnection();
-// });
-
-
-//---------FOR VERCEL----------
-DBConnection();
 
 
 // ROUTES------------------------------------
@@ -32,5 +19,4 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
-app.use(globalError)
-export default app;
+app.use(globalError);
