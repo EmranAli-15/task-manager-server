@@ -5,6 +5,7 @@ const createNote = Joi.object({
     userId: Joi.string().required(),
     categoryId: Joi.string().required(),
     details: Joi.string().empty(''),
+    color: Joi.object(),
     links: Joi.array().items(Joi.string()),
     photos: Joi.array().items(Joi.string()),
 })
