@@ -16,7 +16,7 @@ export const globalError: ErrorRequestHandler = (err: any, req: any, res: any, n
     }
 
 
-    return res.status(500).json({
+    return res.status(status).json({
         status,
         message
     });

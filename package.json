@@ -10,7 +10,8 @@
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.17.0"
+    "mongodb": "^6.17.0",
+    "vercel": "^44.6.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

@@ -10,10 +10,16 @@ app.use(cors());
 app.use(express.json());
 const port = 5000;
 
-app.listen(port, () => {
-    console.log("server is running on port " + port);
-    DBConnection();
-});
+
+//---------FOR LOCALHOST----------
+// app.listen(port, () => {
+//     console.log("server is running on port " + port);
+//     DBConnection();
+// });
+
+
+//---------FOR VERCEL----------
+DBConnection();
 
 
 // ROUTES------------------------------------
@@ -27,3 +33,4 @@ app.get("/", (req, res) => {
 })
 
 app.use(globalError)
+export default app;
