@@ -13,9 +13,9 @@ const createNote = Joi.object({
 const updateNote = Joi.object({
     userId: Joi.string().required(),
     categoryId: Joi.string().required(),
-    title: Joi.string(),
+    title: Joi.string().empty(''),
     color: Joi.object(),
-    details: Joi.string(),
+    details: Joi.string().empty(''),
     links: Joi.array().items(Joi.string()),
     photos: Joi.array().items(Joi.string()),
 })
