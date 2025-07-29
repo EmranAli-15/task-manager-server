@@ -11,16 +11,16 @@ const createNote = joi_1.default.object({
     categoryId: joi_1.default.string().required(),
     details: joi_1.default.string().empty(''),
     color: joi_1.default.object(),
-    links: joi_1.default.array().items(joi_1.default.string()),
+    lists: joi_1.default.array().items(joi_1.default.string()),
     photos: joi_1.default.array().items(joi_1.default.string()),
 });
 const updateNote = joi_1.default.object({
     userId: joi_1.default.string().required(),
     categoryId: joi_1.default.string().required(),
-    title: joi_1.default.string(),
+    title: joi_1.default.string().empty(''),
     color: joi_1.default.object(),
-    details: joi_1.default.string(),
-    links: joi_1.default.array().items(joi_1.default.string()),
+    details: joi_1.default.string().empty(''),
+    lists: joi_1.default.array().items(joi_1.default.string()),
     photos: joi_1.default.array().items(joi_1.default.string()),
 });
 exports.noteValidation = {
