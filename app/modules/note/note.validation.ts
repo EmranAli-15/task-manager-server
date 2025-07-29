@@ -6,7 +6,7 @@ const createNote = Joi.object({
     categoryId: Joi.string().required(),
     details: Joi.string().empty(''),
     color: Joi.object(),
-    links: Joi.array().items(Joi.string()),
+    lists: Joi.array().items(Joi.string()),
     photos: Joi.array().items(Joi.string()),
 })
 
@@ -16,7 +16,7 @@ const updateNote = Joi.object({
     title: Joi.string().empty(''),
     color: Joi.object(),
     details: Joi.string().empty(''),
-    links: Joi.array().items(Joi.string()),
+    lists: Joi.array().items(Joi.string()),
     photos: Joi.array().items(Joi.string()),
 })
 
