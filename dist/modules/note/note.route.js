@@ -14,5 +14,6 @@ route.patch("/updateNote/:noteId", (0, joiValidator_1.JoiValidator)(note_validat
 route.post("/getNotes", note_controller_1.noteController.getNotes);
 route.get("/getSingleNote/:noteId", note_controller_1.noteController.getSingleNote);
 route.delete("/deleteNote/:noteId", note_controller_1.noteController.deleteNote);
+route.post("/deleteCategory", note_controller_1.noteController.deleteCategory);
 route.get("/userNotes/:userId", note_controller_1.noteController.userNotes);
 exports.noteRoute = route;

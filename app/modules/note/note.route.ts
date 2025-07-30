@@ -9,6 +9,7 @@ route.patch("/updateNote/:noteId", JoiValidator(noteValidation.updateNote), note
 route.post("/getNotes", noteController.getNotes);
 route.get("/getSingleNote/:noteId", noteController.getSingleNote);
 route.delete("/deleteNote/:noteId", noteController.deleteNote);
+route.post("/deleteCategory", noteController.deleteCategory);
 route.get("/userNotes/:userId", noteController.userNotes);
 
 

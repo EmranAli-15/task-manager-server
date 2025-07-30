@@ -120,11 +120,20 @@ const userNotes = (0, handleAsync_1.handleAsync)((req, res) => __awaiter(void 0,
         data: result[0]
     });
 }));
+const deleteCategory = (0, handleAsync_1.handleAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { categoryId, userId } = req.body;
+    const result = yield databaseConnection_1.UserCollection.updateOne({ _id: new mongodb_1.ObjectId(userId) }, { $pull: { categories: new mongodb_1.ObjectId(categoryId) } });
+    res.status(200).json({
+        message: 'Category removed.',
+        data: result
+    });
+}));
 exports.noteController = {
     createNote,
     updateNote,
     getNotes,
     getSingleNote,
     deleteNote,
-    userNotes
+    userNotes,
+    deleteCategory
 };

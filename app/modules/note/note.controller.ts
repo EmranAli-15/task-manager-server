@@ -149,11 +149,26 @@ const userNotes = handleAsync(async (req: Request, res: Response) => {
     });
 })
 
+const deleteCategory = handleAsync(async (req: Request, res: Response) => {
+    const { categoryId, userId } = req.body;
+
+    const result = await UserCollection.updateOne(
+        { _id: new ObjectId(userId as string) },
+        { $pull: { categories: new ObjectId(categoryId as string) } as any }
+    );
+
+    res.status(200).json({
+        message: 'Category removed.',
+        data: result
+    });
+})
+
 export const noteController = {
     createNote,
     updateNote,
     getNotes,
     getSingleNote,
     deleteNote,
-    userNotes
+    userNotes,
+    deleteCategory
 }
